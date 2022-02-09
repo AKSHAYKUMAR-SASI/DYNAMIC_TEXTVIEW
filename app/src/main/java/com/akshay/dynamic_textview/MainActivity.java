@@ -15,7 +15,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     final int delay = 5000;
-    int i = 0;
+    int count = 0;
+    final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,30 +27,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void CountDown() {
-        Handler handler = new Handler();
-        final Runnable run = new Runnable() {
+        handler.postDelayed(new Runnable() {
             public void run() {
-                i++;
-                if (i <= 10) {
-                    TextViewCreation();
+                TextViewCreation();
+                count++;
+                if (count<=9) {
+                    handler.postDelayed(this, delay);
                 }
-                handler.postDelayed(this, delay);
 
             }
-        };
-
-        handler.postDelayed(run, delay);
+        }, delay);
     }
 
     private void TextViewCreation() {
-
-
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.rootView);
-
-
         TextView textView = new TextView(getApplicationContext());
-
-
         textView.setText("It's me Akshay");
         linearLayout.addView(textView);
 
